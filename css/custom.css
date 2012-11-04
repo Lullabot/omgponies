@@ -1,0 +1,34 @@
+.reveal section img.custom-img {
+  border: none;
+  box-shadow: none;
+  background: none;
+}
+
+#lullabot-logo {
+  border: none;
+  box-shadow: none;
+  background: none;
+  height: 300px;
+}
+
+.reveal section img.zepto-img {
+/*  -webkit-transform: translateX(-512px); */
+}
+
+.reveal section img.code {
+  width: 743px;
+  height: 640px;
+}
+
+#hugegantic {
+  color: red;
+  font-size: 600%;
+  position: absolute;
+  text-align: center;
+  top: 240px;
+  left: 10px;
+}
+
+.reveal code, pre code {
+  width: 550px;
+}
