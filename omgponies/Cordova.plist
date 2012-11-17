@@ -28,6 +28,7 @@
 	<string>cloud</string>
 	<key>ExternalHosts</key>
 	<array>
+		<string>localhost</string>
 		<string>*.staticflickr.com</string>
 		<string>*.flickr.com</string>
 	</array>

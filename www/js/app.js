@@ -8,28 +8,41 @@ var app = {
   initialize: function() {
     this.bindEvents();
     // Get pony images and display them.
-    $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
-      {
+    $.ajax({
+      type: "GET",
+      url: "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
+      //url: "http://localhost/photos_public.json",
+      contentType: "application/json; charset=utf-8",
+      data: {
         tags: "pony",
         tagmode: "any",
         format: "json"
       },
-      function(data) {
-        var limit = 20;
-        var grid_length = 4;
-        $.each(data.items, function(i, item) {
-          var grid_position = String.fromCharCode("a".charCodeAt(0) + (i % grid_length));
-          $('<div class="ui-block-' + grid_position + '"><a href="#popup" data-rel="dialog" data-transition="pop"><img src="' + item.media.m + '" class="pony-image" /></a></div>').appendTo("#ponies-grid");
-          if (i === limit) {
-            return false;
-          }
-        });
-        // Bind a click to pony images to pass the image src through.
-        $(".pony-image").click(function() {
-          $("#pony-view-image img").attr("src",  $(this).attr("src"));
-        });
+      dataType: "json",
+      success: app.storePonies,
+      error: app.populate
+    });
+  },
+  storePonies: function(data) {
+    localStorage.setItem('omgponiesdata', JSON.stringify(data));
+    console.log("Repopulating Ponies");
+    app.populate();
+  },
+  populate: function() {
+    data = JSON.parse(localStorage.getItem('omgponiesdata'));
+    var limit = 20;
+    var grid_length = 4;
+    $.each(data.items, function(i, item) {
+      var grid_position = String.fromCharCode("a".charCodeAt(0) + (i % grid_length));
+      $('<div class="ui-block-' + grid_position + '"><a href="#popup" data-rel="dialog" data-transition="pop"><img src="' + item.media.m + '" class="pony-image" /></a></div>').appendTo("#ponies-grid");
+      if (i === limit) {
+        return false;
       }
-    );
+    });
+    // Bind a click to pony images to pass the image src through.
+    $(".pony-image").click(function() {
+      $("#pony-view-image img").attr("src",  $(this).attr("src"));
+    });
   },
   // Bind Event Listeners
   //
