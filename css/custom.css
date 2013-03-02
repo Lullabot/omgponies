@@ -20,13 +20,18 @@
   height: 640px;
 }
 
-#hugegantic {
+#hugegantic, p.hugegantic {
   color: red;
   font-size: 600%;
   position: absolute;
   text-align: center;
   top: 240px;
   left: 10px;
+}
+
+p.hugegantic {
+  font-size: 300%;
+  left: 50px;
 }
 
 .reveal code, pre code {
