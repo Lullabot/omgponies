@@ -45,7 +45,6 @@ var app = {
     });
     // Bind a click to pony images to pass the image src through.
     $("a.pony-image img").click(function() {
-                           console.log(this);
       $("#pony-view-image img").attr("src",  $(this).attr("src"));
     });
   },
