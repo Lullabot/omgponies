@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the omgponies feature.
+ */
+
+include_once 'omgponies.features.inc';
