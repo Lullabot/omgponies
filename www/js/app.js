@@ -1,7 +1,7 @@
 /**
  * @file app.js
  *
- * App container for pulling in pony images from flickr.
+ * App container for pulling in pony images.
  */
 var app = {
   // Application Constructor
@@ -10,15 +10,18 @@ var app = {
     // Get pony images and display them.
     $.ajax({
       type: "GET",
-      url: "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
-      //url: "http://localhost/photos_public.json",
+      //url: "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
+      //url: "http://local.omgponies.com/rest/v1/node.jsonp",
+      url: "http://local.omgponies.com/rest/v1/ponies/listing.jsonp",
       contentType: "application/json; charset=utf-8",
+           /**
       data: {
         tags: "pony",
         tagmode: "any",
         format: "json"
       },
-      dataType: "json",
+            **/
+      dataType: "jsonp",
       success: app.storePonies,
       error: app.populate
     });
@@ -32,15 +35,17 @@ var app = {
     data = JSON.parse(localStorage.getItem('omgponiesdata'));
     var limit = 20;
     var grid_length = 4;
-    $.each(data.items, function(i, item) {
+    $.each(data, function(i, item) {
       var grid_position = String.fromCharCode("a".charCodeAt(0) + (i % grid_length));
-      $('<div class="ui-block-' + grid_position + '"><a href="#popup" data-rel="dialog" data-transition="pop"><img src="' + item.media.m + '" class="pony-image" /></a></div>').appendTo("#ponies-grid");
+      //$('<div class="ui-block-' + grid_position + '"><a href="#popup" data-rel="dialog" data-transition="pop" class="pony-image"><img src="' + item.media.m + '" /></a></div>').appendTo("#ponies-grid");
+        $('<div class="ui-block-' + grid_position + '"><a href="#popup" data-rel="dialog" data-transition="pop" class="pony-image">' + item.Image + '</a></div>').appendTo("#ponies-grid");
       if (i === limit) {
         return false;
       }
     });
     // Bind a click to pony images to pass the image src through.
-    $(".pony-image").click(function() {
+    $("a.pony-image img").click(function() {
+                           console.log(this);
       $("#pony-view-image img").attr("src",  $(this).attr("src"));
     });
   },
